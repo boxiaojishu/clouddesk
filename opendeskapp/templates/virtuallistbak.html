@@ -1,0 +1,54 @@
+<?xmlversion="1.0" encoding="UTF-8"?>
+
+<!DOCTYPEhtml PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<htmlxmlns="http://www.w3.org/1999/xhtml" xml:lang="en"lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script  src="http://libs.baidu.com/jquery/1.9.0/jquery.js" type="text/javascript">
+function getspices(virtualid){
+    $.ajax({
+                type: "get",
+                url: "/getspices",
+                data: {id:virtualid},
+                dataType:"json",
+                success: function(data){
+                                console.log(data);
+                var spice_list = data;
+                if(spice_list.length == 0){
+                    //TODO Nothing
+                }
+                else{
+                    spice=spice_list.console;
+                    spiceurl=spice.url;
+                    var link=$('<a href="spicelive://'+spiceurl+'"></a>');
+                    $('body').append(link);
+                    link.get(0).click();
+                    link.remove();
+
+                    }
+                        },
+                error: function () {
+                        },
+                headers: {
+                        },
+                complete: function(){
+                }
+    });
+}
+</script>
+
+{% for item in data %}
+<button type="button" onclick="getspices('{{item.virtual_id}}')">{{ item.virtual_name }}</button> 
+<a href="getspices('{{item.virtual_id}}');">{{ item.virtual_name }}</a>
+{% endfor %}
+<a ></a>
+
+</body>
+</html>
+
